@@ -2,35 +2,30 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class User extends Authenticatable
+class Cliente extends Model
 {
-    use Notifiable;
-
-    protected $table = 'users';
-    protected $guarded = ['id', 'fkrol', 'fksexo'];
-    protected $fillable = ['cui', 'nombres', 'apellidos', 'telefono', 'celular', 'direccion_trabajo', 'direccion', 'usuario', 'estado', 'email', 'password'];
-    protected $hidden = ['password', 'remember_token'];
+    protected $table = 'cliente';
+    protected $guarded = ['id', 'fksexo'];
+    protected $fillable = ['cui', 'nombres', 'apellidos', 'telefono', 'celular', 'direccion_trabajo', 'direccion', 'estado'];
 
     public static function Mostrar($estado)
     {
-        return User::join('rol', 'users.fkrol', 'rol.id')
-                    ->join('sexo', 'users.fksexo', 'sexo.id')
-                    ->where('users.estado', $estado)
-                    ->select('users.*', 'rol.nombre as rol_nombre', 'sexo.nombre as sexo_nombre')->OrderBy('users.nombres', 'asc')->get();
+        return Cliente::join('sexo', 'cliente.fksexo', 'sexo.id')
+                    ->where('cliente.estado', $estado)
+                    ->select('cliente.*', 'sexo.nombre as sexo_nombre')->OrderBy('cliente.nombres', 'asc')->get();
     } 
 
     public static function Seleccionar($id)
     {
-        return User::find($id)->first();
+        return Cliente::find($id)->first();
     }     
 
     public static function Crear(Request $request)
     {
-        $data = new User();
+        $data = new Cliente();
         $data->cui = $requet->cui;
         $data->nombres = $requet->nombres;
         $data->apellidos = $requet->apellidos;
@@ -38,10 +33,6 @@ class User extends Authenticatable
         $data->celular = $requet->celular;
         $data->direccion_trabajo = $requet->direccion_trabajo;
         $data->direccion = $requet->direccion;
-        $data->usuario = $requet->usuario;
-        $data->email = $requet->email;
-        $data->password = encrypt($requet->password);
-        $data->fkrol = $requet->fkrol;
         $data->fksexo = $requet->fksexo;        
 
         if($data->save()){ return true; }
@@ -50,7 +41,7 @@ class User extends Authenticatable
 
     public static function Modificar(Request $request, $id)
     {
-        $data = User::findOrFail($id);
+        $data = Cliente::findOrFail($id);
         $data->cui = $requet->cui;
         $data->nombres = $requet->nombres;
         $data->apellidos = $requet->apellidos;
@@ -58,19 +49,7 @@ class User extends Authenticatable
         $data->celular = $requet->celular;
         $data->direccion_trabajo = $requet->direccion_trabajo;
         $data->direccion = $requet->direccion;
-        $data->usuario = $requet->usuario;
-        $data->email = $requet->email;
-        $data->fkrol = $requet->fkrol;
-        $data->fksexo = $requet->fksexo;        
-
-        if($data->save()){ return true; }
-        else { return false; }
-    }  
-
-    public static function Password(Request $request, $id)
-    {
-        $data = User::findOrFail($id);
-        $data->password = encrypt($requet->password);    
+        $data->fksexo = $requet->fksexo;       
 
         if($data->save()){ return true; }
         else { return false; }
@@ -78,7 +57,7 @@ class User extends Authenticatable
 
     public static function Estado($id)
     {
-        $data = User::findOrFail($id);
+        $data = Cliente::findOrFail($id);
 
         switch ($data->estado) {
             case 1:

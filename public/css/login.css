@@ -1,0 +1,14 @@
+body {
+  background-image: url("../img/bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat; }
+
+.login {
+  height: 100vh; }
+
+.card {
+	border-radius: 1px !important;
+	border: none;
+	border-top: 5px solid #273c75 !important; }

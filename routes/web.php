@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+
+Route::resource('/', 'HomeController');
+Route::resource('/matenimiento/ruta', 'ControllerRuta');
+

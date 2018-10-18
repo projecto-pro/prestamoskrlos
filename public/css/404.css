@@ -1,0 +1,45 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	background: url('../img/portada_bg.jpg');
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+body,html {
+	height: 100%;
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.container .titulo {
+    font-family: 'Kaushan Script', cursive;
+	font-size: 200px;
+	color: #FFF;
+	text-shadow: 0 5px 5px 0 rgba(0,0,0,.1);
+}
+
+.container p {
+	font-size: 24px;
+	color: rgba(255,255,255,.57);
+}
+
+.container p a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+.container p a:hover {
+	text-decoration: underline;
+}
